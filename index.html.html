@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Decodificador</title>
+    <link rel="stylesheet" href="decor.css">
+
+</head>
+
+<body>
+
+	<img id = "letra" src = "Vector3.png">
+	<input id ="texto" type="text" name="input" value="Digite seu texto aqui" >
+	<button id = "btncriptografar"><spam>Criptografar</spam></button>
+	<button id = "btndescriptografar"><spam>Descriptografar</spam></button>
+	<div class="container">
+  		<img id ="retangulo" src= "retangulo.png">
+  		<img id = "imagem" src = "imagem.png">
+  		<label id ="texto1">Criptografando/Descriptografando sua mensagem</label>
+  		<i><label id ="texto2">Digite um texto que você deseja criptografar ou descriptografar.</label></i>
+  		<button id = "btncopiar"><spam>Copiar</spam></button>
+	</div>
+
+</body>
+
+</html>
+
+<script>
+
+	var entrada = document.querySelector("input");
+
+	entrada.addEventListener("click", function() { // Selececionando o texto do input
+
+    	this.select();
+	})
+
+		
+	function criptografar() { 
+		
+		if (document.getElementById("texto").value == "") { // Verifico se o input está vazio
+			document.getElementById("texto").value = "Digite seu texto aqui";
+			document.getElementById("texto").focus();
+			entrada.addEventListener("click", function() {
+    			this.select();
+			})
+		return;
+		}
+		var destino = document.getElementById("texto").value.toLowerCase();
+		var listaSubtituicao = {
+			e:"enter",
+			i:"imes",
+			a:"ai",
+			o:"ober",
+			u:"ufat"
+		};
+		alteracaoLista = destino.replace(/e|i|a|o|u/gi, function(item) { // coloquei entre(|) as strings que devem ser subtituidas
+
+			let it = listaSubtituicao[item];//(Let) - variável limitada ao bloco
+			
+			return it;
+		});
+		document.getElementById('texto2').innerHTML = alteracaoLista;
+		document.getElementById("texto").value = "Digite seu texto aqui"
+	}
+
+	function descriptografar() {
+		
+		if (document.getElementById("texto").value == "") { 
+			document.getElementById("texto").value = "Digite seu texto aqui";
+			document.getElementById("texto").focus();
+			entrada.addEventListener("click", function() {
+    			this.select();
+			})
+		return;
+		}
+		var destino = document.getElementById("texto").value.toLowerCase();
+		var listaSubtituicao = {
+			enter:'e',
+			imes:'i',
+			ai:'a',
+			ober:'o',
+			ufat:'u',
+		};
+		alteracaoLista = destino.replace(/enter|imes|ai|ober|ufat/gi, function(item) { // coloquei entre(|) as strings que devem ser subtituidas
+			let it = listaSubtituicao[item];//(Let) - variável limitada ao bloco
+			return it;
+		});
+		document.getElementById('texto2').innerHTML = alteracaoLista;
+
+	}
+	
+	function copiaTexto() {
+
+		let copiar = document.getElementById("texto2").innerHTML;
+		console.log(copiar)
+		navigator.clipboard.writeText(copiar)
+	}
+
+
+	var codificar = document.getElementById("btncriptografar");
+	codificar.onclick = criptografar;
+		
+	var descodificar = document.getElementById("btndescriptografar");
+	descodificar.onclick = descriptografar;
+
+	var copiar = document.getElementById("btncopiar");
+	copiar.onclick = copiaTexto;
+
+</script>
